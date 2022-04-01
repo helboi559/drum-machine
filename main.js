@@ -1,4 +1,4 @@
-// Setup 'tick' sound
+// Setup sounds && curr count
 const tick = new Audio('sounds/tick.mp3');
 //play tock every 4th beat
 const tock = new Audio('sounds/tock.mp3')
@@ -19,16 +19,16 @@ metronomeB.innerHTML=`
 <input type="checkbox" id="metronome" checked/>`
 kickB.innerHTML=`
 <label for="kick-drum">Kick drum</label>
-<input type="checkbox" id="kick-drum"/>
-<input id="kick-timing"/>`
+<input type="checkbox" id="kick-drum" value="kick-drum"/>
+<input id="kick-timing" value="3" type="number"/>`
 snareB.innerHTML=`
 <label for="snare-drum">Snare Drum</label>
-<input type="checkbox" id="snare-drum"/>
-<input id="snare-timing"/>`
+<input type="checkbox" id="snare-drum" value="snare-drum"/>
+<input id="snare-timing" value="2" type="number"/>`
 hiB.innerHTML=`
 <label for="hi-hat">Hi hat</label>
-<input type="checkbox" id="hi-hat"/>
-<input id="hi-timing"/>`
+<input type="checkbox" id="hi-hat" value="hi-hat"/>
+<input id="hi-timing" value="4" type="number"/>`
 
 userControl.appendChild(metronomeB)
 userControl.appendChild(snareB)
@@ -43,29 +43,36 @@ function update() {
     let kickBox = document.querySelector('#kick-drum')
     let snareBox = document.querySelector('#snare-drum')
     let hiBox = document.querySelector('#hi-hat')
-    // console.log(metroBox.checked)
+    //get timings
+    let kickTime = document.querySelector('#kick-timing')
+    // console.log(typeof kickTime.value)
+    let snareTime= document.querySelector('#snare-timing')
+    let hiTime= document.querySelector('#hi-timing')
+    // console.log(snareTime.value)
+    count += 1
+    //below doesnt affect rest of code
+    currCount.value=count
+    // console.log(currCount)
+    let valueCount = (count % 4) + 1
+    // console.log(valueCount)
     if(metroBox.checked) {
         tick.play()
     } else if (kickBox.checked){
-        kickDrum.play();
+        // console.log(kickTime.value)
+        if (Number(kickTime.value) === valueCount) {
+            kickDrum.play();
+        }
     } else if (snareBox.checked){
-        snareDrum.play();
+        if (Number(kickTime.value) === valueCount) {
+            snareDrum.play();
+        }
     } else if (hiBox.checked){
-        hiHat.play();
+        if (Number(kickTime.value) === valueCount) {
+            hiHat.play();
+        }
     } else {
         tock.play();
     }
-    count += 1
-    // console.log(count)
-    //display value of current count
-    currCount.value = count
-    // if(count % 4 === 0) {
-    //     tock.play();
-    //     count = 0;
-    // } else {
-    //     tick.play();
-    // }
-    
     
 }
 
@@ -75,4 +82,4 @@ function setupUpdate() {
 }
 
 // Call setupUpdate() once after 300ms
-// setTimeout(setupUpdate, 300);
+setTimeout(setupUpdate, 300);
