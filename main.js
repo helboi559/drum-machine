@@ -1,4 +1,4 @@
-// Setup sounds && curr count
+// SETUP SOUNDS AND CURRENT COUNT ------------------
 const tick = new Audio('sounds/tick.mp3');
 //play tock every 4th beat
 const tock = new Audio('sounds/tock.mp3')
@@ -6,8 +6,8 @@ let currCount = document.querySelector('#count input')
 const hiHat = new Audio('sounds/hi-hat.mp3')
 const kickDrum = new Audio('sounds/kick-drum.mp3')
 const snareDrum= new Audio('sounds/snare-drum.mp3')
-//ADDING CHECKBOXES
-
+//ADDING CHECKBOXES---------------------------
+const addControls = () => {
 let userControl = document.querySelector('#controls')
 // console.log(userControl)
 let metronomeB = document.createElement('div')
@@ -34,8 +34,10 @@ userControl.appendChild(metronomeB)
 userControl.appendChild(snareB)
 userControl.appendChild(kickB)
 userControl.appendChild(hiB)
+}
+addControls();
 
-//keep count of update
+//Function to update------------------------
 let count = 0;
 function update() {
     // console.log(metronomeB)
@@ -51,8 +53,8 @@ function update() {
     // console.log(snareTime.value)
     count += 1
     //below doesnt affect rest of code
-    currCount.value=count
-    // console.log(currCount)
+    currCount.value=(count%4) + 1
+    // console.log(currCount)\
     let valueCount = (count % 4) + 1
     // console.log(valueCount)
     if(metroBox.checked) {
@@ -63,11 +65,11 @@ function update() {
             kickDrum.play();
         }
     } else if (snareBox.checked){
-        if (Number(kickTime.value) === valueCount) {
+        if (Number(snareTime.value) === valueCount) {
             snareDrum.play();
         }
     } else if (hiBox.checked){
-        if (Number(kickTime.value) === valueCount) {
+        if (Number(hiTime.value) === valueCount) {
             hiHat.play();
         }
     } else {
@@ -83,3 +85,6 @@ function setupUpdate() {
 
 // Call setupUpdate() once after 300ms
 setTimeout(setupUpdate, 300);
+
+
+
